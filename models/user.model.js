@@ -16,8 +16,8 @@ export const insertUser = async (user) => {
 
 
     const [result] = await connection.query(
-      `INSERT INTO users (global_id,username, password, role, name,email,contact_number,address, createdAt, is_synced) 
-       VALUES (?,?, ?, ?, ?, ?,?,?,?,?)`,
+      `INSERT INTO users (global_id,username, password, role, name,email,contact_number,address, createdAt,image_path, is_disabled, deleted_at, is_synced) 
+       VALUES (?,?, ?, ?, ?, ?,?,?,?,?,?,?,?)`,
       [
         user.global_id,
         user.username,
@@ -28,6 +28,9 @@ export const insertUser = async (user) => {
         user.contact_number,
         user.address,
         user.createdAt,
+        user.image_path,
+        user.is_disabled,
+        user.deleted_at,
         1
       ]
     );
