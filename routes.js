@@ -8,7 +8,7 @@ import { getSales } from './controllers/getSales.controller.js';
 import { getTransaction } from './controllers/getTransaction.controller.js';
 import { syncArchivesController, deleteProductController, getArchivesController } from './controllers/productArchives.controller.js';
 import { updateProduct } from './models/updateProduct.model.js';
-import { sendOtp } from "./controllers/otpController.js";
+import { sendOtp,verifyOtp,invalidateOtp } from "./controllers/otpController.js";
 
 
 const router = express.Router();
@@ -54,6 +54,8 @@ const router = express.Router();
 //OTP
 
 router.post("/send-otp", sendOtp);
+router.post('/verify-otp', verifyOtp);
+router.post('/invalidate-otp', invalidateOtp);
 
 
 export default router;

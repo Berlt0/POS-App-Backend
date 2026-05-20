@@ -73,3 +73,59 @@ export const sendOtp = async (req, res) => {
     });
   }
 };
+
+
+export const verifyOtp = async (req, res) => {
+  const { email, otp } = req.body;
+
+  if (!email || !otp) {
+    return res.status(400).json({
+      success: false,
+      message: "Email and OTP are required",
+    });
+  }
+
+  try {
+    const [rows] = await db.execute(
+      "SELECT * FROM otp_verifications WHERE email = ? AND otp = ? AND expires_at > NOW() ORDER BY created_at DESC LIMIT 1",
+      [email, otp]
+    );
+
+    if (rows.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid or expired OTP",
+      });
+    }
+
+    await db.execute(
+      "DELETE FROM otp_verifications WHERE email = ?",
+      [email]
+    );
+
+    return res.json({
+      success: true,
+      message: "OTP verified successfully",
+    });
+
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
+  }
+};
+
+
+export const invalidateOtp = async (req, res) => {
+  const { email } = req.body;
+  if (!email) return res.status(400).json({ success: false });
+
+  try {
+    await db.execute("DELETE FROM otp_verifications WHERE email = ?", [email]);
+    return res.json({ success: true });
+  } catch (err) {
+    return res.status(500).json({ success: false });
+  }
+};
