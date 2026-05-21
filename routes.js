@@ -14,41 +14,42 @@ import { sendOtp,verifyOtp,invalidateOtp } from "./controllers/otpController.js"
 const router = express.Router();
 
 
-// // GET
+// GET
 
-// router.get('/archives', getArchivesController);
-// router.get('/sales', getSales,updateProduct);
-// router.get('/transaction', getTransaction);
-// router.get('/products',fetchProduct);
-// router.get('/users', getUsers);
+router.get('/archives', getArchivesController);
+router.get('/sales', getSales,updateProduct);
+router.get('/transaction', getTransaction);
+router.get('/products',fetchProduct);
+router.get('/users', getUsers);
 
 
-// // POST
+// POST
 
-// router.post('/products', async (req, res) => {
-//   try {
-//     const status = await syncProduct(req.body);
-//     res.json({ status });
-//     console.log('Product routes loaded');
-//     console.log('POST /sync/products hit', req.body);
-//   } catch (error) {
-//     console.error('Error syncing product:', error);
-//     res.status(500).json({ error: error.message });
-//   }
-// });
+router.post('/products', async (req, res) => {
+  try {
+    const status = await syncProduct(req.body);
+    res.json({ status });
+    console.log('Product routes loaded');
+    console.log('POST /sync/products hit', req.body);
+  } catch (error) {
+    console.error('Error syncing product:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
 
-// router.post('/archives', syncArchivesController);
-// router.post('/transaction', syncTransaction)
-// router.post('/sales', syncSale);
-// router.post('/users', syncUser);
+router.post('/archives', syncArchivesController);
+router.post('/transaction', syncTransaction)
+router.post('/sales', syncSale);
+router.post('/users', syncUser);
 
-// //DELETE
+//DELETE
 
-// router.delete('/products/:id',deleteProductController);
+router.delete('/products/:id',deleteProductController);
 
-// // UPDATE
+// UPDATE
 
-// router.put('/sales/status', updateSaleStatus);
+router.put('/sales/status', updateSaleStatus);
+
 
 
 //OTP
